@@ -1,0 +1,3 @@
+In Python you can do mathematical computations
+In Python you can list items and process and print them
+In Python you can get users to provide input and the give feedback based on their input 
