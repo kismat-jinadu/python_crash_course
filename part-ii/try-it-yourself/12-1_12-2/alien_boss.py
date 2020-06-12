@@ -4,7 +4,7 @@ class AlienBoss:
     """A class to manage the alien_boss."""
 
     def __init__(self, ai_game):
-        """Initialise the ship and set its starting position."""
+        """Initialise the alien_boss and set its starting position."""
         self.screen = ai_game.screen
         self.screen_rect= ai_game.screen.get_rect()
 
