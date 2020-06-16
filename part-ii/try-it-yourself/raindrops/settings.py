@@ -10,5 +10,5 @@ class Settings:
 
 
         #Rain settings
-        self.raindrop_speed = 3
+        self.raindrop_speed = 5
         self.raindrop_direction =-1
