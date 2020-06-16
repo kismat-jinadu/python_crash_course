@@ -67,13 +67,23 @@ class Raindrops:
         """Drop the entire grid of rain."""
         for rain in self.raindrop.sprites():
             rain.rect.y += self.settings.raindrop_speed
-        
+
+    def _check_raindrop_bottom(self):
+        """Check if raindrop is at the bottom of screen and draw new."""
+        for rain in self.raindrop.sprites():
+            if rain.check_bottom():
+                self._new_rain_row()
+    
+    def _new_rain_row(self):
+
+  
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen.""" 
         self.screen.fill(self.settings.bg_color)
         self.raindrop.draw(self.screen)
         self._drop_rain()
+        self._check_raindrop_bottom()
 
         pygame.display.flip()
 

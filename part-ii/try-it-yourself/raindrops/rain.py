@@ -18,6 +18,12 @@ class Rain(Sprite):
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
-        #store the raindrop's exact horizontal position.
+        #store the raindrop's exact position.
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
 
+    def check_bottom(self):
+        """Return True if raindrop is at the bottom of the screen."""
+        screen_rect = self.screen.get_rect()
+        if self.rect.y>=screen_rect.height: 
+            return True
