@@ -46,7 +46,7 @@ class Raindrops:
         #determine the number of rows of raindrops that fit on the screen.
   
         available_space_y = (self.settings.screen_height - 
-        (2 * rain_height))
+        (2*rain_height))
         number_rows = available_space_y // (2 * rain_height)
         
         #Create the grid of raindrops.
@@ -69,14 +69,23 @@ class Raindrops:
             rain.rect.y += self.settings.raindrop_speed
 
     def _check_raindrop_bottom(self):
-        """Check if raindrop is at the bottom of screen and draw new."""
+        """Check if raindrop is at the bottom of screen and draw new row."""
         for rain in self.raindrop.sprites():
             if rain.check_bottom():
-                self._new_rain_row()
-    
-    def _new_rain_row(self):
-
-  
+                self._create_new_row()
+                break
+               
+    def _create_new_row(self):
+        """Create new row of raindrops"""
+        rain = Rain(self)
+        rain_width = rain.rect.width
+        available_space_x = self.settings.screen_width - (2 * rain_width)
+        number_rain_x = available_space_x // (2 * rain_width)
+        for rain_number in range(number_rain_x):
+            rain = Rain(self)
+            rain.x = rain_width + 2 * rain_width * rain_number
+            rain.rect.x = rain.x
+            self.raindrop.add(rain)
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen.""" 

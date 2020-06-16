@@ -25,5 +25,5 @@ class Rain(Sprite):
     def check_bottom(self):
         """Return True if raindrop is at the bottom of the screen."""
         screen_rect = self.screen.get_rect()
-        if self.rect.y>=screen_rect.height: 
+        if self.rect.y==screen_rect.height -(2 * self.rect.height): 
             return True
