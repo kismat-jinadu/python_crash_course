@@ -10,6 +10,7 @@ class Settings:
 
 #Battleship settings 
         self.battleship_speed = 3
+        self.battleship_limit = 3
 
 #Bullet settings
         self.bullet_speed = 1.0
@@ -20,6 +21,6 @@ class Settings:
 
  #Alien ship settings
         self.alien_ship_speed = 1.0
-        self.fleet_drop_speed = 15
+        self.fleet_drop_speed = 200
         #fleet_direction of 1 represents bottom; -1 represents top.
         self.fleet_direction =1
