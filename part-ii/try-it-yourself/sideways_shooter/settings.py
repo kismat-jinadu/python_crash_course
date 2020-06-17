@@ -17,3 +17,9 @@ class Settings:
         self.bullet_height =3
         self.bullet_color = (60,60,60)
         self.bullets_allowed = 10
+
+ #Alien ship settings
+        self.alien_ship_speed = 1.0
+        self.fleet_drop_speed = 15
+        #fleet_direction of 1 represents bottom; -1 represents top.
+        self.fleet_direction =1
