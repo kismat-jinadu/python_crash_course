@@ -65,24 +65,14 @@ class AlienInvasion:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-            #reset the game statistics each time play button is clicked
-            self.stats.reset_stats()
-            self.stats.game_active = True
-
-            #get rid of any remaining aliens and bullets when restarting the game
-            self.aliens.empty()
-            self.bullets.empty()
-
-            #create a new fleet and center the ship each time play is clicked
-            self._create_fleet()
-            self.ship.center_ship()
-
-            #hide the mouse cursor.
-            pygame.mouse.set_visible(False)
+            self._start_game()
+            
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_p and not self.stats.game_active:
+            self._start_game()
+        elif event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
@@ -97,6 +87,23 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _start_game(self):
+        """Start the game if play is click or P is pressed"""
+        #reset the game statistics each time play button is clicked
+        self.stats.reset_stats()
+        self.stats.game_active = True
+
+        #get rid of any remaining aliens and bullets when restarting the game
+        self.aliens.empty()
+        self.bullets.empty()
+
+        #create a new fleet and center the ship each time play is clicked
+        self._create_fleet()
+        self.ship.center_ship()
+
+        #hide the mouse cursor.
+        pygame.mouse.set_visible(False)
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
