@@ -9,7 +9,7 @@ class Rectangle:
         self.screen_rect = self.screen.get_rect()
 
         #set the dimensions and properties of the rectangle. 
-        self.width, self.height = 50, 50
+        self.width, self.height = 50, 150
         self.rectangle_color = (0, 0, 128)
 
         #Build the rect object and center it.
