@@ -12,12 +12,15 @@ class Settings:
         self.tank_speed = 3
 
 #Bullet settings
-        self.bullet_speed = 1.0
+        self.bullet_speed = 50
         self.bullet_width = 20
         self.bullet_height =3
         self.bullet_color = (255,0,0)
         self.bullets_allowed = 10
 
 #Rectangle settings
-        self.rectangle_speed = 5
+        self.rectangle_speed = 1.0
         self.rectangle_direction = 1
+
+#Number of tries allowed
+        self.number_of_tries = 3

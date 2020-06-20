@@ -88,6 +88,7 @@ class TargetPractice:
     def _start_game(self):
         """Start the game if play is click or P is pressed"""
         #reset the game statistics each time play button is clicked
+        self.stats.reset_stats()
         self.stats.game_active = True
 
         #get rid of the target and bullets when restarting the game
@@ -127,6 +128,22 @@ class TargetPractice:
         for bullet in self.bullets.copy():
             if bullet.rect.left >= self.settings.screen_width:
                 self.bullets.remove(bullet)
+                if self.stats.tries_left > 0:
+                    #decrement tries_left.
+                    self.stats.tries_left -= 1
+            if self.stats.tries_left == 0:
+                self.stats.game_active =False
+                pygame.mouse.set_visible(True)
+            self._check_bullet_rectangle_collision()
+
+    def _check_bullet_rectangle_collision(self):
+        """Respond to bullet-rectangle collision"""
+        rectangle = Rectangle(self)
+        target_hit = pygame.sprite.spritecollideany(self.rectangle,self.bullets)
+        if target_hit:
+            #get rid of bullets.
+            self.bullets.empty()
+         
        
     def _update_rectangle(self):
         """Update position of the rectangle."""
