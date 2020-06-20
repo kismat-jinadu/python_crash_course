@@ -41,8 +41,8 @@ class TargetPractice:
 
             if self.stats.game_active:
                 self.tank.update()
-                self.rectangle.update()
                 self._update_bullets()
+                self._update_rectangle()
             self._update_screen()
             
 
@@ -95,16 +95,28 @@ class TargetPractice:
 
         #recreate the rectangle and center the tank each time play is clicked
         self.rectangle.update()
-        self.tank.update()
+        self.tank.reset_tank()
 
         #hide the mouse cursor.
         pygame.mouse.set_visible(False)
+
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+
+    def _check_rectangle_edges(self):
+        """Respond appropriately if the rectangle has reached an edge."""
+        rectangle = Rectangle(self)
+        if self.rectangle.check_edges():
+            self._change_rectangle_direction()
+        
+
+    def _change_rectangle_direction(self):
+        """ Change the rectangle direction."""
+        self.settings.rectangle_direction *= -1
  
 
     def _update_bullets(self):
@@ -116,7 +128,11 @@ class TargetPractice:
             if bullet.rect.left >= self.settings.screen_width:
                 self.bullets.remove(bullet)
        
- 
+    def _update_rectangle(self):
+        """Update position of the rectangle."""
+        self.screen_rect = self.screen.get_rect()
+        self._check_rectangle_edges()
+        self.rectangle.update()
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -125,7 +141,6 @@ class TargetPractice:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.rectangle.draw_rectangle()
-        self.rectangle.update()
 
         #draw the play button if the game is inactive.
         if not self.stats.game_active:

@@ -35,3 +35,7 @@ class Tank:
         """Draw the tank at its current location."""
         self.screen.blit(self.image,self.rect)
 
+    def reset_tank(self):
+        """Move tank back to original position"""
+        self.rect.midleft =self.screen_rect.midleft
+

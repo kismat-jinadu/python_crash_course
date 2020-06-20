@@ -20,3 +20,4 @@ class Settings:
 
 #Rectangle settings
         self.rectangle_speed = 5
+        self.rectangle_direction = 1
