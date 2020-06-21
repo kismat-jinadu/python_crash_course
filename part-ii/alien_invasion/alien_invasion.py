@@ -4,6 +4,8 @@ from time import sleep
 
 import pygame
 
+import json
+
 from settings import Settings
 from game_stats import GameStats
 from scoreboard import Scoreboard
@@ -61,6 +63,9 @@ class AlienInvasion:
         """Respond to keypresses and mouse events.""" 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                filename = 'high_score.json'
+                with open(filename,'w') as f:
+                    json.dump(self.stats.high_score,f)
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
@@ -126,6 +131,9 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
+            filename = 'high_score.json'
+            with open(filename,'w') as f:
+                json.dump(self.stats.high_score,f)
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()

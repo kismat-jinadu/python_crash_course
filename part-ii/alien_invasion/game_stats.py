@@ -1,3 +1,5 @@
+import json
+
 class GameStats:
     """Track statistics for Alien Invasion"""
 
@@ -12,8 +14,10 @@ class GameStats:
         #difficculty level selected 
         self.difficulty_selected = False
 
-        #set high score
-        self.high_score = 0
+        #initialise high score
+        filename = 'high_score.json'
+        with open(filename) as f:
+            self.high_score = json.load(f)
     
     def reset_stats(self):
         """Initialise statistics that can change during the game."""
