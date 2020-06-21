@@ -101,14 +101,16 @@ class AlienInvasion:
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
         play_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if play_clicked and not self.stats.game_active:
+        if (play_clicked and self.stats.level_selected 
+        and not self.stats.game_active):
             #start the game
             self._start_game()
             
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
-        if event.key == pygame.K_p and not self.stats.game_active:
+        if (event.key == pygame.K_p and self.stats.level_selected
+        and not self.stats.game_active):
             self._start_game()
         elif event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
