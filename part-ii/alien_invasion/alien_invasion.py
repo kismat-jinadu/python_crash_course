@@ -114,9 +114,7 @@ class AlienInvasion:
         #reset game statistics
             self.stats.reset_stats()
             self.stats.game_active = True
-            self.sb.prep_score()
-            self.sb.prep_level()
-            self.sb.prep_ships()
+            self.sb.prep_images()
             #start the game
             self._start_game()
             
@@ -233,14 +231,18 @@ class AlienInvasion:
                 self.sb.check_high_score()
         
         if not self.aliens:
-            #destroy existing bullets and create new fleet.
-            self.bullets.empty()
-            self._create_fleet()
-            self.settings.increase_speed()
+            self.start_new_level()
+    
+    def start_new_level(self):
+        """to start a new level of the game"""
+        #destroy existing bullets and create new fleet.
+        self.bullets.empty()
+        self._create_fleet()
+        self.settings.increase_speed()
 
-            #increase level.
-            self.stats.level += 1
-            self.sb.prep_level()
+        #increase level.
+        self.stats.level += 1
+        self.sb.prep_level()
 
     def _update_aliens(self):
         """

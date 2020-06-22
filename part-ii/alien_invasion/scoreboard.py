@@ -18,9 +18,13 @@ class Scoreboard:
         self.text_color = (30,30,30)
         self.font = pygame.font.SysFont(None, 38)
 
+        self.prep_images()
+        self.prep_high_score()
+
+    def prep_images(self):
+        """To prepare the score board images which are reset each time"""
         #prepare the initial score images.
         self.prep_score()
-        self.prep_high_score()
         self.prep_level()
         self.prep_ships()
 
