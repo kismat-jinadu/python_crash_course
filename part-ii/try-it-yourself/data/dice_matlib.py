@@ -1,5 +1,6 @@
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from die import Die
 
@@ -16,7 +17,7 @@ for roll_num in range(50_000):
 
 max_result = die_1.num_sides + die_2.num_sides
 
-plt.hist(results, bins=max_result)
+plt.hist(results, bins=np.arange(2,max_result +1))
 
 #set chart title and label axes.
 plt.title("Results of rolling a D6 and D10 50000 times", fontsize =10)
