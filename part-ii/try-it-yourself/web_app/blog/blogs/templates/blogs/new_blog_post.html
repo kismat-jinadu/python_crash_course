@@ -3,6 +3,8 @@
 {% block content %}
 
 <p>Add a new blog post:</p>
+<p>(Add blog title in first block and then add blog content in the block underneath)</p>
+<p>  </p>
 
 <form action = "{% url 'blogs:new_blog_post' %}" method = 'post'>
   {% csrf_token %}
