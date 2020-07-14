@@ -17,13 +17,19 @@ def topics(request):
     context ={'topics':topics}
     return render(request,'learning_logs/topics.html',context)
 
+def check_topic_owner(request,topic_id):
+    """check if topic owner matches current user"""
+    topic = Topic.objects.get(id=topic_id)
+    if topic.owner != request.user:
+        raise Http404   
+    
+
 @login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries."""
     topic = Topic.objects.get(id=topic_id)
     #make sure the topic belongs to the current user.
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(request, topic_id)
     entries = topic.entry_set.order_by('-date_added')
     context ={'topic':topic, 'entries':entries}
     return render(request,'learning_logs/topic.html',context)
@@ -51,7 +57,8 @@ def new_topic(request):
 def new_entry(request, topic_id):
     """Add a new entry for a particular topic."""
     topic=Topic.objects.get(id=topic_id)
-
+    
+    check_topic_owner(request, topic_id)
     if request.method !='POST':
         #No data submitted; process data.
         form=EntryForm()
@@ -73,7 +80,7 @@ def edit_entry(request, entry_id):
     """Edit an existing entry."""
     entry=Entry.objects.get(id=entry_id)
     topic=entry.topic
-    if topic.owner != request.user:
+    if entry.topic.owner !=request.user:
         raise Http404
 
     if request.method != 'POST':
@@ -89,3 +96,4 @@ def edit_entry(request, entry_id):
     
     context = {'entry':entry,'topic':topic,'form':form}
     return render(request,'learning_logs/edit_entry.html',context)
+
