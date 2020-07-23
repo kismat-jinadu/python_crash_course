@@ -27,7 +27,7 @@ def check_topic_owner(request,topic_id):
 @login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries."""
-    topic = get_object_or_404(id=topic_id)
+    topic = get_object_or_404(Topic,id=topic_id)
     #make sure the topic belongs to the current user.
     check_topic_owner(request, topic_id)
     entries = topic.entry_set.order_by('-date_added')
@@ -56,7 +56,7 @@ def new_topic(request):
 @login_required
 def new_entry(request, topic_id):
     """Add a new entry for a particular topic."""
-    topic=Topic.objects.get(id=topic_id)
+    topic=get_object_or_404(Topic,id=topic_id)
     
     check_topic_owner(request, topic_id)
     if request.method !='POST':
@@ -78,7 +78,7 @@ def new_entry(request, topic_id):
 @login_required
 def edit_entry(request, entry_id):
     """Edit an existing entry."""
-    entry=Entry.objects.get(id=entry_id)
+    entry=get_object_or_404(Entry,id=entry_id)
     topic=entry.topic
     if entry.topic.owner !=request.user:
         raise Http404

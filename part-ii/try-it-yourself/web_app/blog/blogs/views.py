@@ -20,7 +20,7 @@ def blog_posts(request):
 @login_required
 def blog_post(request, blog_post_id):
     """Show a single blog post"""
-    blog_post = get_object_or_404(id = blog_post_id)
+    blog_post = get_object_or_404(BlogPost,id = blog_post_id)
     #make sure the blog post belongs to the current user.
     if blog_post.owner !=request.user:
         raise Http404
