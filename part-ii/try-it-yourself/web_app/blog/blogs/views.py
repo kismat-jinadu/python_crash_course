@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -20,7 +20,7 @@ def blog_posts(request):
 @login_required
 def blog_post(request, blog_post_id):
     """Show a single blog post"""
-    blog_post = BlogPost.objects.get(id = blog_post_id)
+    blog_post = get_object_or_404(id = blog_post_id)
     #make sure the blog post belongs to the current user.
     if blog_post.owner !=request.user:
         raise Http404
