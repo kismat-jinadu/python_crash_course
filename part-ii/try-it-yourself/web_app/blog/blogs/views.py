@@ -10,12 +10,14 @@ def index(request):
     """The home page for Blog"""
     return render(request,'blogs/index.html')
 
-@login_required
 def blog_posts(request):
     """Show all blog posts."""
-    blogposts1 = BlogPost.objects.filter(owner=request.user)
-    blogposts2 = BlogPost.objects.filter(public=True)
-    blog_posts = blogposts1.union(blogposts2).order_by('date_added')
+    if request.user.is_authenticated:
+        blogposts1 = BlogPost.objects.filter(owner=request.user)
+        blogposts2 = BlogPost.objects.filter(public=True)
+        blog_posts = blogposts1.union(blogposts2).order_by('date_added')
+    else: 
+        blog_posts = BlogPost.objects.filter(public=True)
     context = {'blog_posts':blog_posts}
     return render(request, 'blogs/blog_posts.html',context)
 
@@ -32,7 +34,7 @@ def check_blog_post_owner(request,blog_post_id):
     if blog_post.owner != request.user:
         raise Http404 
 
-@login_required
+
 def blog_post(request, blog_post_id):
     """Show a single blog post"""
     blog_post = get_object_or_404(BlogPost,id = blog_post_id)
