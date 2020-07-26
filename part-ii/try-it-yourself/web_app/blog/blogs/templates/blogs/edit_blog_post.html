@@ -9,7 +9,7 @@
 
 <p><h3><a href="{% url 'blogs:blog_post' blog_post.id %}">{{blog_post}}</a></h3></p>
 
-<form action = "{% url 'blogs:edit_blog_post' %}" method = 'post' class="form">
+<form action = "{% url 'blogs:edit_blog_post' blog_post.id %}" method = 'post' class="form">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}

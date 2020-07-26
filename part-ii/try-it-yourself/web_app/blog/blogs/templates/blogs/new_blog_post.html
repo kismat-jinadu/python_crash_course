@@ -13,6 +13,11 @@
 <form action = "{% url 'blogs:new_blog_post' %}" method = 'post' class="form">
   {% csrf_token %}
   {% bootstrap_form form %}
+  <div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="switch1" name="tog" unchecked >
+    <label class="custom-control-label" for="switch1">Public</label>
+  </div>
+  <p>  </p>
   {% buttons %}
   <button name = "submit" class="btn btn-primary">Add blog post</button>
   {% endbuttons %}
