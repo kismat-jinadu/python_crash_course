@@ -13,15 +13,25 @@ def index(request):
 @login_required
 def topics(request):
     """Show all topics."""
-    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    topics1= Topic.objects.filter(owner=request.user)
+    topics2= Topic.objects.filter(public=True)
+    topics = topics1.union(topics2).order_by('date_added')
     context ={'topics':topics}
     return render(request,'learning_logs/topics.html',context)
+
+def check_topic_public(request,topic_id):
+    """check if topic can be viewed by public"""
+    topic = Topic.objects.get(id=topic_id)
+    if topic.public==False:
+        check_topic_owner(request, topic_id)
+    
 
 def check_topic_owner(request,topic_id):
     """check if topic owner matches current user"""
     topic = Topic.objects.get(id=topic_id)
     if topic.owner != request.user:
-        raise Http404   
+        raise Http404 
+ 
     
 
 @login_required
@@ -29,10 +39,11 @@ def topic(request, topic_id):
     """Show a single topic and all its entries."""
     topic = get_object_or_404(Topic,id=topic_id)
     #make sure the topic belongs to the current user.
-    check_topic_owner(request, topic_id)
+    check_topic_public(request, topic_id)
     entries = topic.entry_set.order_by('-date_added')
     context ={'topic':topic, 'entries':entries}
     return render(request,'learning_logs/topic.html',context)
+    
 
 @login_required
 def new_topic(request):
@@ -40,12 +51,19 @@ def new_topic(request):
     if request.method != 'POST':
         #no data submitted; create a blank form.
         form = TopicForm()
+        
     else:
         #POST data submitted; process data.
         form = TopicForm(data = request.POST)
         if form.is_valid():
             new_topic=form.save(commit=False)
             new_topic.owner=request.user
+            switch1 = request.POST.get('tog')
+            if switch1 =="on":
+                new_topic.public = True
+            else:
+                new_topic.public = False
+            
             new_topic.save()
             return redirect('learning_logs:topics')
 

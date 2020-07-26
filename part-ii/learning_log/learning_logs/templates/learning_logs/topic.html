@@ -1,7 +1,8 @@
 {% extends "learning_logs/base.html" %}
 
 {% block page_header %}
-<h3>{{topic}}</h3>
+<h3>{{topic}}</h3> 
+<h6>Written by {{topic.owner}}</h6>
 {% endblock page_header %}
 
 {% block content %}
